@@ -143,6 +143,7 @@ groth16_prover(const void *zkey_buffer,   unsigned long  zkey_size,
 
         VerifyPrimes(zkeyHeader->rPrime, wtnsHeader->prime);
 
+        auto start = std::chrono::high_resolution_clock::now();
         auto prover = Groth16::makeProver<AltBn128::Engine>(
             zkeyHeader->nVars,
             zkeyHeader->nPublic,
@@ -162,6 +163,9 @@ groth16_prover(const void *zkey_buffer,   unsigned long  zkey_size,
         );
         AltBn128::FrElement *wtnsData = (AltBn128::FrElement *)wtns.getSectionData(2);
         auto proof = prover->prove(wtnsData);
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        std::cout << "Proof calculation time: " << duration.count() << " milliseconds" << std::endl;
 
         std::string stringProof = proof->toJson().dump();
         std::string stringPublic = BuildPublicString(wtnsData, zkeyHeader->nPublic);
