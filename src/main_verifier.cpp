@@ -1,5 +1,8 @@
 #include <iostream>
 #include <stdexcept>
+#include <fstream>
+#include <gmp.h>
+#include <memory>
 
 #include "fileloader.hpp"
 #include "verifier.h"
@@ -23,10 +26,14 @@ int main(int argc, char **argv)
 
         char errorMessage[256];
 
+        auto start = std::chrono::high_resolution_clock::now();
         const int error = groth16_verify(proof.dataAsString().c_str(),
                                          inputs.dataAsString().c_str(),
                                          key.dataAsString().c_str(),
                                          errorMessage, sizeof(errorMessage));
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        std::cout << "Proof calculation time: " << duration.count() << " milliseconds" << std::endl;
 
         if (error == VERIFIER_VALID_PROOF) {
 
