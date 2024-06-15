@@ -71,8 +71,8 @@ int main(int argc, char **argv)
         AltBn128::FrElement *wtnsData = (AltBn128::FrElement *)wtns->getSectionData(2);
         auto proof = prover->prove(wtnsData);
         auto end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        std::cout << "Proof calculation time: " << duration.count() << " milliseconds" << std::endl;
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        std::cout << "Proof calculation time: " << duration.count() << " microseconds" << std::endl;
 
         std::ofstream proofFile;
         proofFile.open (proofFilename);
