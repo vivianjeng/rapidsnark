@@ -3,6 +3,7 @@
 #include <fstream>
 #include <gmp.h>
 #include <memory>
+#include <chrono>
 
 #include "fileloader.hpp"
 #include "verifier.h"
