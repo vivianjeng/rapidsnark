@@ -18,8 +18,18 @@ android_x86_64:
 
 ios:
 	rm -rf build_prover_ios && mkdir build_prover_ios && cd build_prover_ios && \
-	cmake .. -GXcode -DTARGET_PLATFORM=IOS -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../package_ios && \
-    echo "" && echo "Now open Xcode and compile the generated project" && echo ""
+	cmake .. -DTARGET_PLATFORM=IOS -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../package_ios && \
+    make -j$(nproc) -vvv && make install
+
+ios_simulator_arm64:
+	rm -rf build_prover_ios_simulator_arm64 && mkdir build_prover_ios_simulator_arm64 && cd build_prover_ios_simulator_arm64 && \
+	cmake .. -DTARGET_PLATFORM=IOS_SIMULATOR -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../package_ios_simulator_arm64 && \
+    make -j$(nproc) -vvv && make install
+
+ios_simulator_x86_64:
+	rm -rf build_prover_ios_simulator_x86_64 && mkdir build_prover_ios_simulator_x86_64 && cd build_prover_ios_simulator_x86_64 && \
+	cmake .. -DTARGET_PLATFORM=IOS_SIMULATOR_x86_64 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../package_ios_simulator_x86_64 && \
+    make -j$(nproc) -vvv && make install
 
 clean:
 	rm -rf build_prover build_prover_android build_prover_android_x86_64 build_prover_ios package package_android \

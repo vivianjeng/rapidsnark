@@ -214,7 +214,7 @@ build_ios()
     export TARGET=arm64-apple-darwin
     export MIN_IOS_VERSION=8.0
 
-    export ARCH_FLAGS="-arch arm64 -arch arm64e"
+    export ARCH_FLAGS="-arch arm64"
     export OPT_FLAGS="-O3 -g3 -fembed-bitcode"
     HOST_FLAGS="${ARCH_FLAGS} -miphoneos-version-min=${MIN_IOS_VERSION} -isysroot $(xcrun --sdk ${SDK} --show-sdk-path)"
 
@@ -248,7 +248,7 @@ build_ios_simulator()
 		case "$ARCH" in
 			"arm64" )
 				echo "Building for iPhone Simulator arm64"
-				ARCH_FLAGS="-arch arm64 -arch arm64e"
+				ARCH_FLAGS="-arch arm64"
 				;;
 			"x86_64" )
 				echo "Building for iPhone Simulator x86_64"
@@ -283,9 +283,6 @@ build_ios_simulator()
 		cd ..
 	done
 
-	mkdir -p "${GMP_DIR}/package_iphone_simulator/lib"
-	lipo "${libs[@]}" -create -output "${GMP_DIR}/package_iphone_simulator/lib/libgmp.a"
-	echo "Wrote universal fat library for iPhone Simulator arm64/x86_64 to ${GMP_DIR}/package_iphone_simulator/lib/libgmp.a"
 }
 
 build_macos_arch()
